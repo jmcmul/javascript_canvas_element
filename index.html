@@ -1,0 +1,100 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Drawing Area</title>
+<!-- You can add your style here rather than in an external style sheet. -->
+<style>
+	canvas {
+	    border:5px solid #d3d3d3;
+	    background-color: #f1f1f1;
+	    display: block;
+	}	
+</style>
+</head>
+<body>
+    <!-- DO NOT MODIFY THIS HTML -->
+    <canvas id = "myCanvas" width = "350" height = "500"  ></canvas>
+	<input type = "color" id = "picker"/>
+<script>
+	var canvas = document.querySelector("#myCanvas");
+	var ctx = canvas.getContext("2d");
+	//Allows you to draw with 2d drawing commands
+	var color = "red";
+	var pause = false;
+	//the default is that it's drawing (not paused)
+	ctx.fillStyle = color;
+	canvas.width = window.innerWidth*.8;
+	canvas.height = window.innerHeight*.8;
+
+	function draw(posX, posY){
+	if (pause==false){
+		//if by default, it is drawing
+		ctx.fillStyle = color;
+		console.log("I am drawing");
+		ctx.beginPath();
+		ctx.arc(posX, posY, 10, 0, 2 * Math.PI);
+		ctx.fill();
+	}
+	}
+
+	myCanvas.addEventListener(
+		'mousemove', function (e){
+		console.log(e.x);
+		console.log(e.y);
+		draw(e.x, e.y);
+	})
+
+	window.addEventListener(
+		'change', function(e){
+		//looks for any 'change' in color
+		var y = document.getElementById("picker");
+		color = y.value;
+		ctx.fillStyle = color
+		console.log("Picked a new color")
+		}
+	)
+
+	window.addEventListener(
+		'keydown', function (e){
+		console.log(e);
+		//write a series of if statements to change colors
+		if (e.key == 'g'){
+			color = "green";
+			console.log("The pen color is green")
+		}
+		if (e.key == 'r'){
+			color = "red";
+			console.log("The pen color is red")
+		}
+		if (e.key == 'y'){
+			color = "yellow";
+			console.log("The pen color is yellow")
+		}
+		if (e.key == 'b'){
+			color = "blue"
+			console.log("The pen color is blue")
+		}
+		if (e.key == " "){
+			//clears the entire canvas if the space key pressed
+			ctx.clearRect(0,0, canvas.width, canvas.height);
+			console.log("Cleared the drawing")
+		}
+		if (e.keyCode == 38){
+			pause = true;
+			//pauses the drawing function
+			console.log("I am not drawing")
+		}
+		if (e.keyCode == 40){
+			//un-pauses the drawing function
+			pause = false;
+			console.log("I am drawing again")
+		}
+		
+	})
+</script>
+
+
+</body>
+</html>
